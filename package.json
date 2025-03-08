@@ -21,11 +21,11 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run compile",
-    "package": "vsce package --yarn -o extension.vsix",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package -o extension.vsix",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "pnpm run compile && pnpm run lint",
+    "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test"
   },
