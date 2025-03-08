@@ -27,5 +27,7 @@ suite('Extension Test Suite', () => {
     const result = await DocumentFormatter.formatDocument(document);
 
     assert.equal(expected, result[0].newText);
+
+    return result;
   });
 });
