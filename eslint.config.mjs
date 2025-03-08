@@ -30,6 +30,8 @@ export default [
       semi: 'warn',
       quotes: ['error', 'single'],
       'brace-style': ['error', 'stroustrup'],
+      'no-var': 'error',
+      'prefer-const': 'error',
     },
   },
 ];

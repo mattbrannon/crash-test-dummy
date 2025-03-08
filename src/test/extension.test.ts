@@ -3,16 +3,17 @@ import path from 'node:path';
 import vscode from 'vscode';
 import DocumentFormatter from '../formatter';
 import packageJson from '../../package.json';
+import Mocha from 'mocha';
 
-suite('Extension Test Suite', () => {
+Mocha.suite('Extension Test Suite', () => {
   const extensionId = `${packageJson.publisher}.${packageJson.name}`;
-  test('Extension is activated', async () => {
+  Mocha.test('Extension is activated', async () => {
     const extension = vscode.extensions.getExtension(extensionId);
     await extension?.activate();
     assert.ok(extension?.isActive);
   });
 
-  test('Formats a document', async (done) => {
+  Mocha.test('Formats a document', async () => {
     const filepath = vscode.Uri.file(
       path.resolve(process.cwd(), 'src/test/sample-file.ts'),
     );
@@ -25,6 +26,6 @@ suite('Extension Test Suite', () => {
     const result = await DocumentFormatter.formatDocument(document);
 
     assert.equal(expected, result[0].newText);
-    done();
+    // done();
   });
 });

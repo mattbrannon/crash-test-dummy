@@ -28,7 +28,8 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "deploy": "vsce publish"
+    "deploy": "vsce publish",
+    "clean": "rm -rf out"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
