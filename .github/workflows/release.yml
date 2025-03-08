@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main # or main
+  pull_request:
+    branches:
+      - main # or main
 
 permissions:
   contents: read # for checkout

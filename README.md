@@ -2,11 +2,7 @@
 
 A Visual Studio Code extension for testing continuous integration, auto-publishing, and semantic versioning.
 
-## Features
-
-- Provides a simple "Hello World" command.
-- Demonstrates how to integrate tests, linting, and compilation
-- Configured for continuous integration and auto-release using GitHub Actions and semantic-release.
+This extension doesn't really do anything other than allow me to test the CI/CD pipeline and semantic versioning with GitHub Actions and semantic-release.
 
 ## Installation
 
@@ -52,5 +48,3 @@ npm run compile
 ## License
 
 This project is provided as-is without any explicit license.
-
-with VS Code.
