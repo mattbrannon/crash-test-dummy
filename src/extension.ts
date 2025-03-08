@@ -1,26 +1,29 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import vscode from 'vscode';
+import Logger from './logger';
+import DocumentFormatter from './formatter';
+import packageJson from '../package.json';
+import { supportedLanguages } from './languages';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+async function activate(context: vscode.ExtensionContext) {
+  for (const language of supportedLanguages) {
+    const provider =
+      vscode.languages.registerDocumentRangeFormattingEditProvider(language, {
+        async provideDocumentRangeFormattingEdits(
+          document: vscode.TextDocument,
+        ): Promise<vscode.TextEdit[]> {
+          return await DocumentFormatter.formatDocument(document);
+        },
+      });
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "crash-test-dummy" is now active!');
+    context.subscriptions.push(provider);
+  }
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('crash-test-dummy.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from crash-test-dummy!');
-	});
-
-	context.subscriptions.push(disposable);
+  Logger.info(packageJson.displayName, 'version', packageJson.version);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+function deactivate(context: vscode.ExtensionContext) {
+  context.subscriptions.forEach((subscription) => subscription.dispose());
+  Logger.dispose();
+}
+
+export = { activate, deactivate };
