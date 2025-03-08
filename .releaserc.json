@@ -7,9 +7,10 @@
     [
       "semantic-release-vsce",
       {
-        "packagePath": "your-extension.vsix"
+        "packageVsix": true
       }
     ],
+
     "@semantic-release/git"
   ]
 }
