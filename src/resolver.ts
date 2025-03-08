@@ -3,8 +3,15 @@ import Logger from './logger';
 
 class Resolver {
   moduleName: string;
+  static eslint: InstanceType<typeof Resolver>;
+  static prettier: InstanceType<typeof Resolver>;
   constructor(moduleName: string) {
     this.moduleName = moduleName;
+  }
+
+  static {
+    this.eslint = Resolver.make('eslint');
+    this.prettier = Resolver.make('prettier');
   }
 
   static make(moduleName: string) {
