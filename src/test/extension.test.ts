@@ -4,8 +4,6 @@ import vscode from 'vscode';
 import DocumentFormatter from '../formatter';
 import packageJson from '../../package.json';
 
-// import Cache from '../utils/cache'
-
 suite('Extension Test Suite', () => {
   const extensionId = `${packageJson.publisher}.${packageJson.name}`;
   test('Extension is activated', async () => {
@@ -14,7 +12,7 @@ suite('Extension Test Suite', () => {
     assert.ok(extension?.isActive);
   });
 
-  test('Formats a document', async () => {
+  test('Formats a document', async (done) => {
     const filepath = vscode.Uri.file(
       path.resolve(process.cwd(), 'src/test/sample-file.ts'),
     );
@@ -27,7 +25,6 @@ suite('Extension Test Suite', () => {
     const result = await DocumentFormatter.formatDocument(document);
 
     assert.equal(expected, result[0].newText);
-
-    return result;
+    done();
   });
 });
