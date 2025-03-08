@@ -2,10 +2,7 @@ name: Release
 on:
   push:
     branches:
-      - main # or main
-  pull_request:
-    branches:
-      - main # or main
+      - main # or main      
 
 permissions:
   contents: read # for checkout
@@ -37,6 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
