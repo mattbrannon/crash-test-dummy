@@ -3,6 +3,7 @@ import path from 'node:path';
 import vscode from 'vscode';
 import Loader from '../loader';
 import { rcConfigs, flatConfigs } from '../data';
+import fsp from 'node:fs/promises';
 
 import { ESLintConfigType, type ESLintConfig } from '../types';
 
@@ -14,11 +15,13 @@ export function getDocumentWorkspace(
   )?.uri.fsPath;
 }
 
-export function traverse(root = getWorkspaceRoot()): string[] {
-  return readDir(root)
-    .map((file) => (isDirectory(file) ? traverse(file) : file))
-    .flat(Infinity as 1)
-    .filter((file) => isFile(file));
+export async function traverse(root = getWorkspaceRoot()): Promise<string[]> {
+  const files = await readDir(root);
+  const directories = files.filter((file) => isDirectory(file));
+  const nestedFiles = await Promise.all(
+    directories.map((directory) => traverse(directory)),
+  );
+  return files.concat(...nestedFiles).filter((file) => isFile(file));
 }
 
 export function getWorkspaceRoot(): string {
@@ -58,19 +61,19 @@ export function isDeclarationFile(file: string): boolean {
   return /.*\.d\.[cm]*ts(\.map)?$/.test(file);
 }
 
-export function readDir(directory: string): string[] {
+export async function readDir(directory: string): Promise<string[]> {
   try {
-    return fs
-      .readdirSync(path.resolve(directory))
-      .map((file) => path.resolve(directory, file));
+    return fsp
+      .readdir(path.resolve(directory))
+      .then((files) => files.map((file) => path.resolve(directory, file)));
   }
  catch (error) {
     return [];
   }
 }
 
-export function getFilesInDirectory(dir: string): string[] {
-  return readDir(dir).filter((file) => isFile(file));
+export async function getFilesInDirectory(dir: string): Promise<string[]> {
+  return (await readDir(dir)).filter((file) => isFile(file));
 }
 
 export function getConfigNames(): string[] {
@@ -86,9 +89,9 @@ export function getConfigNames(): string[] {
   return configNames;
 }
 
-export function getESLintConfigPath(filepath: string): string {
-  const configNames = getConfigNames();
-  const configPath = searchUp(filepath, configNames);
+export async function getESLintConfigPath(filepath: string): Promise<string> {
+  const configNames = await getConfigNames();
+  const configPath = await searchUp(filepath, configNames);
   if (!configPath) {
     throw new Error('ESLint config path not found');
   }
@@ -112,7 +115,7 @@ export async function getESLintConfigData(filepath: string): Promise<{
   configPath: string;
   configType: ESLintConfigType;
 }> {
-  const configPath = getESLintConfigPath(filepath);
+  const configPath = await getESLintConfigPath(filepath);
   const config = await getESLintConfig(configPath);
   const configType = getESLintConfigType(config);
 
@@ -126,11 +129,11 @@ export async function getESLintConfigData(filepath: string): Promise<{
   };
 }
 
-export function searchDirectory(
+export async function searchDirectory(
   currentFolder: string,
   fileNames: string[],
-): string | undefined {
-  const files = getFilesInDirectory(currentFolder);
+): Promise<string | undefined> {
+  const files = await getFilesInDirectory(currentFolder);
   const file = fileNames.find((filename) =>
     files.includes(path.resolve(currentFolder, filename)),
   );
@@ -138,14 +141,14 @@ export function searchDirectory(
   // return getFilesInDirectory(currentFolder).find((file) => fileNames.includes(path.basename(file)));
 }
 
-export function searchUp(
+export async function searchUp(
   filepath: string,
   fileNames: string[],
-): string | undefined {
+): Promise<string | undefined> {
   const outOfBounds = path.resolve(getWorkspaceRoot(), '..');
   let currentFolder = isDirectory(filepath) ? filepath : path.dirname(filepath);
   while (currentFolder !== outOfBounds) {
-    const matchingFile = searchDirectory(currentFolder, fileNames);
+    const matchingFile = await searchDirectory(currentFolder, fileNames);
     if (matchingFile) {
       return matchingFile;
     }
