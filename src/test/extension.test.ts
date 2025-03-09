@@ -13,7 +13,7 @@ Mocha.suite('Extension Test Suite', () => {
     assert.ok(extension?.isActive);
   });
 
-  Mocha.test('Formats a document', async (done) => {
+  Mocha.test('Formats a document', async () => {
     const filepath = vscode.Uri.file(
       path.resolve(process.cwd(), 'src/test/sample-file.ts'),
     );
@@ -26,6 +26,23 @@ Mocha.suite('Extension Test Suite', () => {
     const result = await DocumentFormatter.formatDocument(document);
 
     assert.equal(expected, result[0].newText);
-    done();
   });
+});
+
+Mocha.after((fn) => {
+  vscode.window.activeTextEditor?.edit((editBuilder) => {
+    const firstLine = vscode.window.activeTextEditor?.document.lineAt(0);
+    const lastLine = vscode.window.activeTextEditor?.document.lineAt(
+      vscode.window.activeTextEditor?.document.lineCount - 1,
+    );
+    if (!firstLine || !lastLine) {
+      process.exit(0);
+    }
+    const fullRange = new vscode.Range(
+      firstLine?.range.start,
+      lastLine?.range.end,
+    );
+    editBuilder.replace(fullRange, '');
+  });
+  fn();
 });
