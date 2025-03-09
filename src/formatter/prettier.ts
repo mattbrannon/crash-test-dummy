@@ -14,7 +14,7 @@ class PrettierFormatter {
   }
 
   async isIgnored() {
-    const ignorePath = System.searchUp(this.document.fileName, [
+    const ignorePath = await System.searchUp(this.document.fileName, [
       '.prettierignore',
     ]);
     const info = await this.prettier.getFileInfo(this.document.fileName, {
