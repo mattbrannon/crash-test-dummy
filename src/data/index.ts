@@ -28,3 +28,23 @@ export const rcConfigs = [
   '.eslintrc.json',
   '.eslintrc',
 ];
+
+export const supportedExtensions = [
+  '.js',
+  '.jsx',
+  '.ts',
+  '.tsx',
+  '.vue',
+  '.svelte',
+  '.json',
+  '.jsonc',
+  '.html',
+  '.css',
+  '.scss',
+  '.less',
+  '.graphql',
+  '.md',
+  '.mdx',
+  '.yaml',
+  '.yml',
+];
