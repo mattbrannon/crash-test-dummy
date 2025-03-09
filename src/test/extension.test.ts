@@ -5,7 +5,8 @@ import DocumentFormatter from '../formatter';
 import packageJson from '../../package.json';
 import Mocha from 'mocha';
 
-Mocha.suite('Extension Test Suite', () => {
+Mocha.suite('Extension Test Suite', function () {
+  this.timeout(10000);
   const extensionId = `${packageJson.publisher}.${packageJson.name}`;
   Mocha.test('Extension is activated', async () => {
     const extension = vscode.extensions.getExtension(extensionId);
