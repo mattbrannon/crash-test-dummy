@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/mattbrannon/crash-test-dummy/compare/v1.2.0...v1.3.0) (2025-03-09)
+
+
+### Features
+
+* add supported file extensions for improved compatibility ([842e5a6](https://github.com/mattbrannon/crash-test-dummy/commit/842e5a6316a39bc13589c109f86bd817bd6fd08b))
+
 # [1.2.0](https://github.com/mattbrannon/crash-test-dummy/compare/v1.1.1...v1.2.0) (2025-03-09)
 
 
