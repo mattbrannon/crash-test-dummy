@@ -38,7 +38,10 @@ class ESLintFormatter {
       );
 
       const isIgnored = await eslint.isPathIgnored(this.document.fileName);
-      const logPath = this.document.fileName.replace(System.workspaceRoot, '.');
+      const logPath = this.document.fileName.replace(
+        System.getWorkspaceRoot(),
+        '.',
+      );
       if (isIgnored) {
         Logger.warning(`[ESLint]: File is ignored: ${logPath}`);
         return text;
@@ -90,7 +93,7 @@ class ESLintFormatter {
 
   static async getESLint(document: vscode.TextDocument) {
     const workspace =
-      System.getDocumentWorkspace(document) || System.workspaceRoot;
+      System.getDocumentWorkspace(document) || System.getWorkspaceRoot();
     const { configType, config, configPath } = await System.getESLintConfigData(
       document.fileName,
     );
