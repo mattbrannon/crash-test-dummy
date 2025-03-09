@@ -2,25 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vscode from 'vscode';
 import Loader from './loader';
+import { rcConfigs, flatConfigs } from './data';
 
-import type { ESLintConfig } from './types';
-
-enum ESLintConfigType {
-  FLAT = 'flat',
-  ESLINTRC = 'eslintrc',
-}
-
-const flatConfigs = [
-  'eslint.config.js',
-  'eslint.config.mjs',
-  'eslint.config.cjs',
-];
-const rcConfigs = [
-  '.eslintrc.js',
-  '.eslintrc.cjs',
-  '.eslintrc.json',
-  '.eslintrc',
-];
+import { ESLintConfigType, type ESLintConfig } from './types';
 
 class System {
   static get workspaceRoot() {

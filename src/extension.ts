@@ -2,7 +2,7 @@ import vscode from 'vscode';
 import Logger from './logger';
 import DocumentFormatter from './formatter';
 import packageJson from '../package.json';
-import { supportedLanguages } from './languages';
+import { supportedLanguages } from './data';
 
 async function activate(context: vscode.ExtensionContext) {
   for (const language of supportedLanguages) {

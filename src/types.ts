@@ -15,3 +15,8 @@ export interface LegacyConfigWithParser extends LegacyConfig {
 export type LegacyOptions = ESLintNamespace.ESLint.LegacyOptions;
 export type FlatOptions = ESLintNamespace.ESLint.Options;
 export type Options = LegacyOptions | FlatOptions;
+
+export enum ESLintConfigType {
+  FLAT = 'flat',
+  ESLINTRC = 'eslintrc',
+}
