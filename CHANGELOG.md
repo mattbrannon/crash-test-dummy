@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/mattbrannon/crash-test-dummy/compare/v1.3.0...v1.4.0) (2025-03-09)
+
+
+### Features
+
+* refactor file system methods to support asynchronous operations ([6f41a2c](https://github.com/mattbrannon/crash-test-dummy/commit/6f41a2caddb6fd372c6ca1247996e34366579f84))
+* update isIgnored method to support asynchronous file searching ([508c7f4](https://github.com/mattbrannon/crash-test-dummy/commit/508c7f43b991731db65190be9c338493d6c1468f))
+
 # [1.3.0](https://github.com/mattbrannon/crash-test-dummy/compare/v1.2.0...v1.3.0) (2025-03-09)
 
 
