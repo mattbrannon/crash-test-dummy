@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/mattbrannon/crash-test-dummy/compare/v1.1.1...v1.2.0) (2025-03-09)
+
+
+### Bug Fixes
+
+* update logPath calculation to use System.getWorkspaceRoot() ([ab379d9](https://github.com/mattbrannon/crash-test-dummy/commit/ab379d9d071f277b1820731dfd8254822d623919))
+
+
+### Features
+
+* add utility functions for workspace and file management; update ESLint path handling ([54d5a72](https://github.com/mattbrannon/crash-test-dummy/commit/54d5a72f0416b1efb7b5f6bcf504f78c76f7b7de))
+
 ## [1.1.1](https://github.com/mattbrannon/crash-test-dummy/compare/v1.1.0...v1.1.1) (2025-03-09)
 
 
