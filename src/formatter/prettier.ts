@@ -26,7 +26,7 @@ class PrettierFormatter {
   async formatDocument() {
     const text = this.document.getText();
     const filepath = this.document.fileName;
-    const logPath = filepath.replace(System.workspaceRoot, '.');
+    const logPath = filepath.replace(System.getWorkspaceRoot(), '.');
 
     if (await this.isIgnored()) {
       Logger.info(`[Prettier]: File is ignored: ${logPath}`);
