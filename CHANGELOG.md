@@ -1,3 +1,16 @@
+## [1.1.1](https://github.com/mattbrannon/crash-test-dummy/compare/v1.1.0...v1.1.1) (2025-03-09)
+
+
+### Bug Fixes
+
+* **test:** enforce no-var and prefer-const rules in ESLint config; update test suite to use Mocha syntax ([800fc5f](https://github.com/mattbrannon/crash-test-dummy/commit/800fc5f86ecc5cfe3cebd12dd1d2da32affb7d20))
+* **tests:** increase timeout for Extension Test Suite to improve test reliability ([63dbabd](https://github.com/mattbrannon/crash-test-dummy/commit/63dbabd93cca761b347b5c8b56d4b68c7a728bb7))
+* **tests:** remove done callback from document formatting test and add cleanup after tests ([9df08c4](https://github.com/mattbrannon/crash-test-dummy/commit/9df08c4324b51df1814cc78886882dada70154d5))
+* **tests:** return result from formatDocument test for improved validation ([1fb6c42](https://github.com/mattbrannon/crash-test-dummy/commit/1fb6c4266e500fffae32a1e55385652b69dea42d))
+* **tests:** update document formatting test to use done callback for improved async handling ([19e7042](https://github.com/mattbrannon/crash-test-dummy/commit/19e704261f198834e42167587a78e9952c4b9b4a))
+* **tests:** update document formatting test to use done callback for proper async handling ([b95581c](https://github.com/mattbrannon/crash-test-dummy/commit/b95581c36f74537345ce3772e6bc2a0cb61e6a9b))
+* **workflow:** enhance testing workflow to support multiple OS environments ([46dc489](https://github.com/mattbrannon/crash-test-dummy/commit/46dc489122a3c3be17a08bc854ad97fd6d6e0860))
+
 # [1.1.0](https://github.com/mattbrannon/crash-test-dummy/compare/v1.0.0...v1.1.0) (2025-03-08)
 
 
