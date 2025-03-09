@@ -100,7 +100,7 @@ class ESLintFormatter {
       workspace,
     );
 
-    const { loadESLint, Linter } = Resolver.make('eslint').require(
+    const { loadESLint, Linter } = Resolver.eslint.require(
       document.fileName,
     ) as typeof ESLintNamespace;
     const ESLint = await loadESLint({ useFlatConfig: configType === 'flat' });

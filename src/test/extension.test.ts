@@ -1,15 +1,49 @@
-import * as assert from 'assert';
+import assert from 'node:assert';
+import path from 'node:path';
+import vscode from 'vscode';
+import DocumentFormatter from '../formatter';
+import packageJson from '../../package.json';
+import Mocha from 'mocha';
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-import * as vscode from 'vscode';
-// import * as myExtension from '../../extension';
+Mocha.suite('Extension Test Suite', function () {
+  this.timeout(10000);
+  const extensionId = `${packageJson.publisher}.${packageJson.name}`;
+  Mocha.test('Extension is activated', async () => {
+    const extension = vscode.extensions.getExtension(extensionId);
+    await extension?.activate();
+    assert.ok(extension?.isActive);
+  });
 
-suite('Extension Test Suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
+  Mocha.test('Formats a document', async () => {
+    const filepath = vscode.Uri.file(
+      path.resolve(process.cwd(), 'src/test/sample-file.ts'),
+    );
+    const document = await vscode.workspace.openTextDocument(filepath);
+    const editor = await vscode.window.showTextDocument(document);
+    await editor.edit((editBuilder) => {
+      editBuilder.insert(new vscode.Position(0, 0), 'var foo = 1');
+    });
+    const expected = 'const foo = 1;\n';
+    const result = await DocumentFormatter.formatDocument(document);
 
-	test('Sample test', () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
-	});
+    assert.equal(expected, result[0].newText);
+  });
+});
+
+Mocha.after((fn) => {
+  vscode.window.activeTextEditor?.edit((editBuilder) => {
+    const firstLine = vscode.window.activeTextEditor?.document.lineAt(0);
+    const lastLine = vscode.window.activeTextEditor?.document.lineAt(
+      vscode.window.activeTextEditor?.document.lineCount - 1,
+    );
+    if (!firstLine || !lastLine) {
+      process.exit(0);
+    }
+    const fullRange = new vscode.Range(
+      firstLine?.range.start,
+      lastLine?.range.end,
+    );
+    editBuilder.replace(fullRange, '');
+  });
+  fn();
 });
